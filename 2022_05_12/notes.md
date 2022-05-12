@@ -3,6 +3,7 @@
 ### Using the [Pts](https://ptsjs.org/) library
 - using a library will allow us to shortcut to more sophisticated graphics
 - less time spent with scaffolding in our program to interact with the canvas
+- some interesting [reasoning](https://medium.com/@williamngan/pt-93382bf5943e) behind the library...
 
 ### Creating a new document to use the library
 - we'll need some more changes to the basic [document](../2022_05_05/canvas.html) to work with this library
