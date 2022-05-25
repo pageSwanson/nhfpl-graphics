@@ -49,7 +49,7 @@ function draw() {
   - a point is a place within a dimension
   - usually this dimension is elaborated in context using coordinates 
     - i.e. a point [1, 2] implies a place in a 2-dimensional plan
-  - we can illustrate this idea with Pts, but keep in mind the Pts `Pt` is more than a reference to place
+  - we can illustrate this idea with Pts, but keep in mind the Pts [`Pt`](https://ptsjs.org/docs/?p=Pt_Pt) is more than a reference to place
     - it has a radius, color, etc
   - add the following just before `space.playOnce()`
 ```js
@@ -119,7 +119,6 @@ function draw() {
              form.stroke("#ff9", 8).line( [new Pt(), point_group[1]] );
              form.strokeOnly("#973", 8).arc(new Pt(), point_group[1].magnitude(), 0, point_group[1].angle())
          });
-
 ```
   - using the Pts `Group`, we can transform collections of points altogether
   - can we do this programmatically to make the code even simpler?
