@@ -88,7 +88,6 @@
 - for now though, nothing happens
   - we're not actually changing the graphics based on the time parameter
 #### Animating changes to the point group
-- two ways of going about this
 
 ##### render continuously, updating on some interval
 - `Num.cycle`, modulo, and `time`
@@ -114,16 +113,6 @@
 
          space.play();
 ```
-
-##### render a new segment for each 'frame'
-- calculate a framerate, and thus when to update the graphic
-- render the update when it's time to do so
-- synchronize with the iterative pattern
-```js
-
-```
-
-### animate color changes
 
 ## Next time
 - more sophisticated animations
