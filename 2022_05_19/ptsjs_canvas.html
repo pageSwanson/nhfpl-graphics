@@ -19,18 +19,18 @@
              let point_group = new Group(space.center,
                                          new Pt(space.width, space.center.y));
 
-             let segment_ratio = Num.cycle( (time%1000)/1000 );
+             let segment_ratio = Num.cycle( (time%2000)/2000);
+             let radians = new Array(Math.floor( 100 * segment_ratio)); // create an array, representing each increment clockwise
+             radians.fill(2 * Math.PI / radians.length); // populate the array automatically with the step size in radians (rotational step size)
 
-             let radians = new Array(Math.floor(segment_ratio * 60));
-             radians.fill(2 * Math.PI / radians.length);
-
-             radians.forEach((x, idx) => {
-                 let from_point = new Pt(point_group[1]);
+             radians.forEach((x, idx) => { // do the following for each of the segments in the array
+                 let from_point = new Pt(point_group[1]); // copy the point along the circumference before rotating
                  point_group.rotate2D(x);
-                 point_group.scale((radians.length - idx) / radians.length);
+                 point_group.scale((radians.length - idx) / radians.length); // scale the 'vector' by some fraction after we rotate
 
                  form.stroke("#348", 6).line( point_group );
-                 form.strokeOnly("#000", 6).arc(space.center, point_group[1].$subtract(space.center).magnitude(), from_point.angle(), x, false);
+                 // create an arc spanning the rotation from the last vector to the updated vector (after scale / rotation)
+                 form.strokeOnly("#000", 6).arc(space.center, point_group[1].$subtract(space.center).magnitude(), from_point.angle(), x, true);
              });
          });
 

@@ -47,24 +47,51 @@
              let point_group = new Group(space.center,
                                          new Pt(space.width, space.center.y));
 
-             let radians = new Array(20); // create an array, representing each increment
-             radians.fill(2 * Math.PI / radians.length); // populate the area automatically with the step size in radians (rotational step size)
+             let radians = new Array(20); // create an array, representing each increment clockwise
+             radians.fill(2 * Math.PI / radians.length); // populate the array automatically with the step size in radians (rotational step size)
 
-             radians.forEach((x, idx) => {
-                 let from_point = new Pt(point_group[1]);
+             radians.forEach((x, idx) => { // do the following for each of the segments in the array
+                 let from_point = new Pt(point_group[1]); // copy the point along the circumference before rotating
                  point_group.rotate2D(x);
-                 point_group.scale((radians.length - idx) / radians.length);
+                 point_group.scale((radians.length - idx) / radians.length); // scale the 'vector' by some fraction after we rotate
 
                  form.stroke("#348", 6).line( point_group );
-                 form.strokeOnly("#000", 6).arc(space.center, point_group[1].$subtract(space.center).magnitude(), from_point.angle(), x, false);
+                 // create an arc spanning the rotation from the last vector to the updated vector (after scale / rotation)
+                 form.strokeOnly("#000", 6).arc(space.center, point_group[1].$subtract(space.center).magnitude(), from_point.angle(), x, true);
              });
          });
 ```
 - scaling the same point groups using functions
 - altering the design across a series of points
 
-### animation of transforms introduced last session
+### animation of these transforms
+- if we want to go about animating graphics, we consider
+  - time and [frames](https://en.wikipedia.org/wiki/Frame_rate)
+  - iteration
 
+#### modify the `space.add` call, change `space.playOnce()`
+- add the `time` parameter, which tracks the current running time in milliseconds
+  - by default, we've been creating an 'animation', but we've only been rendering a single frame..
+  - we could use a second parameter, `ftime`, for the time between frames
+- change `space.playOnce()` to `space.play()`
+  - this means the animation will play indefinitely, not just for one frame
+```js
+         space.add((time, _) => {
+             let point_group = new Group(space.center,
+                                         new Pt(space.width, space.center.y));
+             // continued
+             ...
+         });
+
+         space.play();
+```
+- for now though, nothing happens
+  - we're not actually changing the graphics based on the time parameter
+#### Animating changes to the point group
+- two ways of going about this
+
+##### render continuously, updating on some interval
+- `Num.cycle`, modulo, and `time`
 ```js
          space.add((time, _) => {
              let point_group = new Group(space.center,
@@ -87,8 +114,15 @@
 
          space.play();
 ```
-### add new parameters to `add`, change call to `space.playOnce()`
-### explain `Num.cycle`, modulo, and `time`
+
+##### render a new segment for each 'frame'
+- calculate a framerate, and thus when to update the graphic
+- render the update when it's time to do so
+- synchronize with the iterative pattern
+```js
+
+```
+
 ### animate color changes
 
 ## Next time
