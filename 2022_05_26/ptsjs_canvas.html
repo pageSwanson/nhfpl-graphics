@@ -15,34 +15,11 @@
          });
          let form = space.getForm();
 
-         function rotate_stroke_points(form, point_group, radians, color) {
-            let from_point = new Pt(point_group[1]);
-            point_group[1].rotate2D( radians );
+         space.add({
 
-            form.stroke(color, 6).line( point_group );
-            form.strokeOnly(color, 8).arc(point_group[0], space.width / 2, from_point.angle(), point_group[1].angle(), false);
-        }
-
-        space.add((time, _) => {
-             let point_group = new Group(space.center,
-                                         new Pt(space.width, space.center.y));
-
-             let segment_ratio = Num.cycle( (time%1000)/1000 );
-
-             let radians = new Array(Math.floor(segment_ratio * 200));
-             radians.fill(2 * Math.PI / radians.length);
-
-             radians.forEach((x, idx) => {
-                 let from_point = new Pt(point_group[1]);
-                 point_group.rotate2D(x);
-                 point_group.scale((radians.length - idx) / radians.length);
-
-                 form.stroke("#348", .6).line( point_group );
-                 form.strokeOnly("#000", .6).arc(space.center, point_group[1].$subtract(space.center).magnitude(), from_point.angle(), x, false);
-             });
          });
 
-         space.play();
+         space.playOnce();
      }
     </script>
     <style>
