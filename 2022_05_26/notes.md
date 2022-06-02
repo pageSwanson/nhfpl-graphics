@@ -87,10 +87,18 @@
 ```
 - for now though, nothing happens
   - we're not actually changing the graphics based on the time parameter
+
 #### Animating changes to the point group
 
 ##### render continuously, updating on some interval
-- `Num.cycle`, modulo, and `time`
+- the idea here is to adjust the display differently for each execution of the code within `space.add`
+- `Num.cycle`
+  - a function that takes some input and constrains it between 0 and 1, with [easing](https://easings.net/)
+  - by default, the 'easing' for `Num.cycle` is a sine function
+- modulo operator `%`
+  - division, but the result is the remainder
+- `time`
+  - this tells us how long the animation has been executing for (in milliseconds)
 ```js
          space.add((time, _) => {
              let point_group = new Group(space.center,
