@@ -9,7 +9,7 @@
             const size = 20;
 
             let lines = [...Array(size)].map((_, i) => {
-                let x_index = Math.floor(space.width / size);
+                let x_index = i * Math.floor(space.width / size);
                 return new Group(
                     new Pt(x_index, 0), new Pt(x_index, space.height)
                 )

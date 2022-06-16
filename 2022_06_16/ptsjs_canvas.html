@@ -16,18 +16,7 @@
         let form = space.getForm();
 
         space.add( (time, _) => {
-            const size = 20;
-
-            let lines = [...Array(size)].map((_, i) => {
-                let x_index = i * Math.floor(space.width / size);
-                return new Group(
-                    new Pt(x_index, 0), new Pt(x_index, space.height)
-                )
-            });
-
-             lines.forEach((line, idx) => {
-                 form.strokeOnly('#000', 6).line(line)
-             });
+            // put things in space, add form.. animate
          });
 
          space.play();
