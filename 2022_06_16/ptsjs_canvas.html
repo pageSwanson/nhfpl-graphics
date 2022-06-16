@@ -16,8 +16,19 @@
         let form = space.getForm();
 
         space.add( (time, _) => {
-            // add animation code here
-        });
+            const size = 20;
+
+            let lines = [...Array(size)].map((_, i) => {
+                let x_index = i * Math.floor(space.width / size);
+                return new Group(
+                    new Pt(x_index, 0), new Pt(x_index, space.height)
+                )
+            });
+
+             lines.forEach((line, idx) => {
+                 form.strokeOnly('#000', 6).line(line)
+             });
+         });
 
          space.play();
      }
