@@ -137,13 +137,37 @@
 
 ### complete animation code
 ```js
-        const size = 100;
-        let line_colors = Array(size).fill("#000");
+     function draw() {
+        let canvas = document.querySelector("canvas");
+        let space = new CanvasSpace(canvas);
+        space.setup({
+            bgcolor: "#fff"
+        });
+        let form = space.getForm();
+
+        const size = 40;
+        let base_color = Color.fromHex('#dbd8c3');
+
+        let line_colors = Array(size).fill(base_color);
+
+        function get_wrapped_index(count) {
+            return (count % size) - 1 < 0 ? size - 1 : (count % size) - 1;
+        }
 
         let tempo = new Tempo(300);
         tempo.every(1).start((count) => {
-            line_colors[count % size] = "#2f3";
-            line_colors[(count % size) - 1 < 0 ? size - 1 : (count % size) - 1] = "#000";
+            line_colors[count % size] = Color.fromHex("#143");
+            line_colors[get_wrapped_index(count)] = base_color;
+        });
+
+        tempo.every(2).start((count) => {
+            line_colors[count % size] = Color.fromHex("#192");
+            line_colors[get_wrapped_index(count)] = base_color;
+        });
+
+        tempo.every(6).start((count) => {
+            line_colors[count % size] = Color.fromHex("#432");
+            line_colors[get_wrapped_index(count)] = base_color;
         });
 
         space.add( tempo );
@@ -157,15 +181,19 @@
             let lines = line_colors.map((_, i) => {
                 let x_index = Math.floor(i * offset);
                 return new Group(
-                    new Pt(x_index + drift, 0).scale(y_ctrl), 
-                    new Pt(x_index + drift, space.height).scale(1 - y_ctrl)
-                );
+                    new Pt(x_index + drift, 0).rotate2D(1 - y_ctrl), 
+                    new Pt(x_index + drift, space.height).rotate2D(y_ctrl)
+                )
             });
 
-            lines.forEach((line, idx) => {
-                form.strokeOnly(line_colors[idx], 2).line(line);
-            });
+             lines.forEach((line, idx) => {
+                 form.strokeOnly(line_colors[idx].hex, 6).line(line)
+             });
+
+             let x_ctrl = space.pointer.x / space.size.x;
+             base_color = Color.fromHex('#dbd8c3').multiply(x_ctrl);
          });
 
          space.bindMouse().play();
+     }
 ```
